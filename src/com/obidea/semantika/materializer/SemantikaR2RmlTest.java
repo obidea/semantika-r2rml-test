@@ -56,11 +56,15 @@ public class SemantikaR2RmlTest extends R2RmlBaseTest
          .addProperty(Environment.CONNECTION_PASSWORD, getDbPassword())
          .addMappingSource(getMappingFile(), false)
          .createApplicationManager();
-      
-      mMaterializerEngine = appManager.createMaterializerEngine().useNTriples();
-      mMaterializerEngine.start();
-      mMaterializerEngine.materialize(new File(sExportFile));
-      mMaterializerEngine.stop();
+
+      try {
+         mMaterializerEngine = appManager.createMaterializerEngine().useNTriples();
+         mMaterializerEngine.start();
+         mMaterializerEngine.materialize(new File(sExportFile));
+      }
+      finally {
+         mMaterializerEngine.stop();
+      }
    }
 
    @Override
